@@ -14,3 +14,12 @@ jobs:
         with:
           persist-credentials: false
       - run: test -f README.md
+      - name: Fail on queue branches when a marker asks for it
+        env:
+          REF: ${{ github.ref }}
+          ATTEMPT: ${{ github.run_attempt }}
+        run: |
+          case "$REF" in refs/heads/queue/*) ;; *) exit 0 ;; esac
+          if [ -f FAIL_ON_QUEUE ]; then echo "FAIL_ON_QUEUE is present on $REF"; exit 1; fi
+          if [ -f FLAKY_ON_QUEUE ] && [ "$ATTEMPT" = 1 ]; then echo "FLAKY_ON_QUEUE first attempt on $REF"; exit 1; fi
+          if [ -f SLOW_ON_QUEUE ]; then sleep "$(cat SLOW_ON_QUEUE)"; fi
