@@ -1,0 +1,14 @@
+name: push-probe
+on:
+  push:
+    branches: ["lin-*", "zz-lin-*"]
+permissions: {}
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - env:
+          SHA: ${{ github.sha }}
+          REF: ${{ github.ref }}
+        run: echo "push on $REF at $SHA"
