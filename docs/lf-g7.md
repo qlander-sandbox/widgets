@@ -1,3 +1,3 @@
 one
-two CHANGED BY A
+two
 three
