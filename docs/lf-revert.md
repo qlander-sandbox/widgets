@@ -1,3 +1,3 @@
 line one
-line two CHANGED BY A
+line two
 line three
