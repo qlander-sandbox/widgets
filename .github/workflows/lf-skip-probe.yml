@@ -1,0 +1,8 @@
+name: lf-skip-probe
+on: pull_request
+jobs:
+  expensive:
+    if: github.event.sender.login != 'widgets-qlander-queue[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "sender ${{ github.event.sender.login }} actor ${{ github.actor }}"
